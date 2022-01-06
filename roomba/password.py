@@ -105,7 +105,8 @@ class Password(object):
                   "(about 2 seconds). Release the button and your robot will "
                   "flash WIFI light."
                   % (parsedMsg["robotname"],addr))
-            input("Press Enter to continue...")
+            if sys.stdout.isatty():
+                input("Press Enter to continue...")
 
             print("Received: %s"  % json.dumps(parsedMsg, indent=2))
             print("\r\rRoomba (%s) IP address is: %s"
@@ -166,9 +167,8 @@ class Password(object):
             #     print("received data: hex: %s, length: %d"
             #           % (binascii.hexlify(data), len(data)))
             if len(data) <= 7:
-                print('Error getting password, receive %d bytes. Follow the '
+                raise Exception('Error getting password, receive %d bytes. Follow the '
                       'instructions and try again.' % len(data))
-                return False
             else:
                 # Convert password to str
                 #password = str(data[7:].decode()) #old version
@@ -185,4 +185,3 @@ class Password(object):
                 # write config file
                 with open(self.file, 'w') as cfgfile:
                     Config.write(cfgfile)
-        return True
