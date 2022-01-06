@@ -9,6 +9,7 @@ Quick Program to get blid and password from roomba
 Nick Waterton 5th May 2017: V 1.0: Initial Release
 '''
 
+import sys
 from roomba import Password
 
 def main():
@@ -31,9 +32,12 @@ def main():
     arg = parser.parse_args()
 
     if arg.roombaIP is None:
-        Password(file=arg.configfile)
+        is_successful = Password(file=arg.configfile)
     else:
-        Password(arg.roombaIP,file=arg.configfile)
+        is_successful = Password(arg.roombaIP,file=arg.configfile)
+
+    if not is_successful:
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()
