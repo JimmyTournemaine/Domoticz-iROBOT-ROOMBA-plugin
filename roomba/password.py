@@ -167,8 +167,9 @@ class Password(object):
             #     print("received data: hex: %s, length: %d"
             #           % (binascii.hexlify(data), len(data)))
             if len(data) <= 7:
-                raise Exception('Error getting password, receive %d bytes. Follow the '
+                print('Error getting password, receive %d bytes. Follow the '
                       'instructions and try again.' % len(data))
+                return False
             else:
                 # Convert password to str
                 #password = str(data[7:].decode()) #old version
@@ -185,3 +186,4 @@ class Password(object):
                 # write config file
                 with open(self.file, 'w') as cfgfile:
                     Config.write(cfgfile)
+        return True
